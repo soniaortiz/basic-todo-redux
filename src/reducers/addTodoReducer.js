@@ -6,6 +6,7 @@ const initialState = {
 
 
 const addTodoReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case 'ADD_TODO':
             return {
@@ -14,6 +15,15 @@ const addTodoReducer = (state = initialState, action) => {
             }
         case 'GET_LIST':
             return state
+        case 'DELETE_ITEM':
+            return {
+                ...state,
+                todoList: state.todoList.filter((item, index)=>{
+                    if(item.id != action.payload.id){
+                        return {...item, id: item.id-1}
+                    }
+                })
+            }
         default:
             return state
     }

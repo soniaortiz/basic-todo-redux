@@ -1,11 +1,11 @@
 import React from 'react'
 
-const id = 0
+let id = -1
 export const addTodo = (todoText)=>{
     return{
         type: 'ADD_TODO',
         payload:{
-            id: +id,
+            id: new Date().getMilliseconds(),
             todoText 
         }
     }
@@ -15,5 +15,14 @@ export const addTodo = (todoText)=>{
 export const getList = ()=>{
     return{
         type: 'GET_LIST'
+    }
+}
+
+export const deleteItem = ({target})=>{
+    return{
+        type: 'DELETE_ITEM',
+        payload:{
+            id: target.id
+        }
     }
 }

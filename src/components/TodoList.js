@@ -1,28 +1,41 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import { deleteItem } from "../actions/actions";
 const mapStateToProps = (state) => {
-    const todos  = state.addTodoReducer.todoList
+    const todos = state.addTodoReducer.todoList
     return {
-        todos: todos
+        todos: todos,
+        deleteItemProp: deleteItem
     }
 }
 
-const createList = (item, index)=>{
-return <li key={index}>{item.content}</li>
+const mapDispatchToProps = {  
+        deleteItemProp: deleteItem
+}
+
+const createList = (item, index, deleteItemDispatcher) => {
+    return (
+        <li
+            key={index}
+            id={item.id}
+            onClick={deleteItemDispatcher}
+        >
+            {item.content}
+        </li>
+    )
 }
 
 
-const TodoList = ({todos}) => {
+const TodoList = (state) => {
     return (
         <ul>
             {
-                todos && todos.map((obj, index)=>{
-                    return createList(obj, index)
+                state.todos && state.todos.map((obj, index) => {
+                    return createList(obj, index, state.deleteItemProp)
                 })
             }
         </ul>
     )
 }
 
-export default connect(mapStateToProps)(TodoList)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
